@@ -1,0 +1,79 @@
+@font-face {
+  font-family: "iranYekan";
+  src:
+    url("../fonts/iranyekanwebregular.eot") format("eot"),
+    url("../fonts/iranyekanwebregular.woff") format("woff"),
+    url("../fonts/iranyekanwebregular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "iranYekan" !important;
+}
+
+.todo-title {
+  text-align: center;
+  color: rgb(57, 56, 56);
+  font-style: italic;
+}
+
+.todo {
+  width: 60%;
+  margin: auto;
+  background-color: rgba(128, 128, 128, 0.275);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 50px;
+}
+
+.form-group {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  height: 30px;
+  border-radius: 6px;
+  outline: none;
+  border: 1px solid transparent;
+  padding-left: 10px;
+}
+
+.submit-btn {
+  background-color: darkblue;
+  display: inline-block;
+  width: 40px;
+  height: 34px;
+  color: white;
+  outline: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.todo-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.done-task-length,
+.remaining-task-length {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.done-task-length > p:first-child,
+.remaining-task-length > p:first-child {
+  color: rgb(108, 108, 108);
+}
+
+.done-task-length > p:nth-child(2),
+.remaining-task-length > p:nth-child(2) {
+  color: rgb(5, 5, 122);
+}
