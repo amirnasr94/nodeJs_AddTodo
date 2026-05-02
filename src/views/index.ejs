@@ -23,6 +23,19 @@
           <p>50</p>
         </div>
       </section>
+      <section>
+        <% if(!!todos.length) { %>
+            <ul>
+              <% for(let todo of todos){ %>
+                <li>
+                    <%= todo.text %> <a href="/admin/completed-todo?id=<%= todo.id %>" target="_self">Completed</a> <a href="/admin/delete-todo?id=<%= todo.id %>" target="_self">Delete</a>
+                </li>
+              <% } %>
+            </ul>
+        <% } else { %>
+            <p>There is nothing ToDo!</p>
+        <% } %>
+      </section>
     </section>
   </body>
 </html>

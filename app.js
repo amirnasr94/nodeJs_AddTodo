@@ -1,8 +1,11 @@
-import { adminRoute } from "./src/routes/adminRoute.js";
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import { fileAddress } from "./src/helper/fileAddress.js";
+import { indexRoute } from "./src/routes/indexRoute.js";
+import { adminRoute } from "./src/routes/adminRoute.js";
+import { deleteRoute } from "./src/routes/deleteRoute.js";
+import { completedRoute } from "./src/routes/completedRoute.js";
 
 const app = express();
 const __dirname = fileAddress();
@@ -20,12 +23,10 @@ app.set("views", path.join(__dirname, "..", "views"));
 //#endregion
 
 //#region Routes
+app.use("/", indexRoute);
 app.use("/admin", adminRoute);
-app.get("/", (req, res) => {
-  res.render("index", {
-    pageTitle: "Todo List",
-  });
-});
+app.use("/admin", deleteRoute);
+app.use("/admin", completedRoute);
 
 //#region
 
