@@ -6,6 +6,7 @@ import { indexRoute } from "./src/routes/indexRoute.js";
 import { adminRoute } from "./src/routes/adminRoute.js";
 import { deleteRoute } from "./src/routes/deleteRoute.js";
 import { completedRoute } from "./src/routes/completedRoute.js";
+import { sequelize } from "./src/helper/dbSetting.js";
 
 const app = express();
 const __dirname = fileAddress();
@@ -30,6 +31,12 @@ app.use("/admin", completedRoute);
 
 //#region
 
-app.listen(3000, () => {
-  console.log("server is conected!");
-});
+sequelize
+  .sync()
+  .then((result) => {
+    console.log(result);
+    app.listen(3000, () => {
+      console.log("server is conected!");
+    });
+  })
+  .catch((err) => console.log(err));
