@@ -1,6 +1,6 @@
 import express from "express";
-import { addTodoController } from "../controllers/addTodoController.js";
+import { completeTodoController } from "../controllers/completeTodoController.js";
 
 export const completedRoute = express.Router();
 
-completedRoute.post("/completed-todo", addTodoController);
+completedRoute.get("/completed-todo", completeTodoController);

@@ -57,5 +57,22 @@ export class Todo {
     );
   }
 
-  static completedTodo(id: number, callBack: (err?: any) => void) {}
+  static completedTodo(id: number, callBack: (err?: any) => void) {
+    fs.readFile(
+      filePath,
+      (err: NodeJS.ErrnoException | null, data: NonSharedBuffer) => {
+        if (err) return [];
+        const parsedData = JSON.parse(data.toString());
+        const indexOfTask = parsedData.findIndex(
+          (task: any) => task.id === Number(id),
+        );
+        if (indexOfTask === -1) return;
+        parsedData[indexOfTask].completed = true;
+        fs.writeFile(filePath, JSON.stringify(parsedData), (err) => {
+          if (err) callBack(err);
+          else callBack();
+        });
+      },
+    );
+  }
 }
