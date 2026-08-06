@@ -17,26 +17,19 @@
 // }
 //----------------------------------------------------------------------------------------
 import { Todo } from "../model/todo.js";
-export function getAllTodosController(_req: any, res: any) {
-  // let completedTodos: any, remainingTodos: any;
-  // Todo.findAll({
-  //   where: {
-  //     completed: true,
-  //   },
-  // }).then((response) => (completedTodos = response));
-  // Todo.findAll({
-  //   where: {
-  //     completed: false,
-  //   },
-  // }).then((response) => (remainingTodos = response));
-  // console.log({ completedTodos, remainingTodos });
+export async function getAllTodosController(_req: any, res: any) {
+  const completedTodos = await Todo.count({
+    where: {
+      completed: true,
+    },
+  });
 
-  Todo.findAll().then((response) => {
-    res.render("index", {
-      pageTitle: "TODO LIST",
-      todos: response,
-      completedTodo: 50,
-      remainingTodo: 50,
-    });
+  const todos = await Todo.findAll();
+
+  res.render("index", {
+    pageTitle: "TODO LIST",
+    todos,
+    completedTodo: completedTodos,
+    remainingTodo: todos.length - completedTodos,
   });
 }
