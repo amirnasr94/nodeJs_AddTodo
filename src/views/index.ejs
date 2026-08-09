@@ -3,39 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A simple and clean task management application."
+    />
     <title><%= pageTitle %></title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
+
   <body>
-    <h1 class="todo-title">ToDo List</h1>
-    <section class="todo">
-      <form action="/admin/add-todo" method="post" class="form-group">
-        <input type="text" placeholder="task..." name="task" />
-        <button class="submit-btn" type="submit">+</button>
-      </form>
-      <section class="todo-list">
-        <div class="done-task-length">
-          <p>Done Tasks:</p>
-          <p><%= completedTodo %></p>
+    <main class="page">
+      <header class="header">
+        <h1 class="todo-title">My Todo List</h1>
+        <p class="subtitle">Organize your day, one task at a time.</p>
+      </header>
+
+      <section class="todo" aria-label="Todo list">
+        <form action="/admin/add-todo" method="post" class="form-group">
+          <input
+            type="text"
+            name="task"
+            placeholder="What needs to be done?"
+            aria-label="New task"
+            autocomplete="off"
+            required
+          />
+          <button class="submit-btn" type="submit" aria-label="Add task">
+            +
+          </button>
+        </form>
+
+        <section class="stats" aria-label="Task statistics">
+          <div class="stat-card completed">
+            <p class="stat-label">Completed tasks</p>
+            <p class="stat-value"><%= completedTodo %></p>
+          </div>
+
+          <div class="stat-card">
+            <p class="stat-label">Remaining tasks</p>
+            <p class="stat-value"><%= remainingTodo %></p>
+          </div>
+        </section>
+
+        <div class="list-header">
+          <h2 class="list-title">Your tasks</h2>
         </div>
-        <div class="remaining-task-length">
-          <p>Remaining Tasks:</p>
-          <p><%= remainingTodo %></p>
-        </div>
-      </section>
-      <section>
-        <% if(!!todos.length) { %>
-            <ul>
-              <% for(let todo of todos){ %>
-                <li>
-                    <%= todo.text %> <a href="/admin/completed-todo?id=<%= todo.id %>" target="_self">Completed</a> <a href="/admin/delete-todo?id=<%= todo.id %>" target="_self">Delete</a>
-                </li>
-              <% } %>
-            </ul>
+
+        <% if (todos.length) { %>
+          <ul class="todo-list">
+            <% for (let todo of todos) { %>
+              <li class="todo-item <%= todo.completed ? 'completed' : '' %>">
+                <div class="todo-content">
+                  <span class="todo-check" aria-hidden="true"></span>
+                  <p class="todo-text"><%= todo.text %></p>
+                </div>
+
+                <div class="todo-actions">
+                  <% if (!todo.completed) { %>
+                    <a
+                      class="action-link complete-link"
+                      href="/admin/completed-todo?id=<%= todo.id %>"
+                      target="_self"
+                    >
+                      Complete
+                    </a>
+                  <% } %>
+
+                  <a
+                    class="action-link delete-link"
+                    href="/admin/delete-todo?id=<%= todo.id %>"
+                    target="_self"
+                  >
+                    Delete
+                  </a>
+                </div>
+              </li>
+            <% } %>
+          </ul>
         <% } else { %>
-            <p>There is nothing ToDo!</p>
+          <div class="empty-state">
+            <div class="empty-icon" aria-hidden="true">✓</div>
+            <p>No tasks yet. Add your first task above.</p>
+          </div>
         <% } %>
       </section>
-    </section>
+    </main>
   </body>
 </html>
