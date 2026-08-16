@@ -9,29 +9,22 @@
 //   });
 // };
 //------------------------------------------------------------------------------
-import { Todo } from "../model/todo.js";
+import Todo_Model from "../db/model/todo.js";
 
-export const completeTodoController = (req: any, res: any) => {
+export const completeTodoController = async (req: any, res: any) => {
   if (!req.query.id) res.redirect("/");
-  Todo.findOne({
-    where: { id: req.query.id },
-  })
-    .then((data) => {
-      if (!data) return;
-      Todo.update(
-        {
-          completed: true,
-        },
-        {
-          where: {
-            id: req.query.id,
-          },
-        },
-      )
-        .then(() => {
-          res.redirect("/");
-        })
-        .catch((err) => console.log(err));
-    })
-    .catch((err) => console.log(err));
+  try {
+    await Todo_Model.updateOne(
+      {
+        _id: req.query.id,
+      },
+      {
+        $set: { completed: true },
+      },
+    );
+
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
 };

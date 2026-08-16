@@ -1,30 +1,11 @@
-//file based controller
-// import { Todo } from "../model/_bk_todo.js";
+import Todo_Model from "../db/model/todo.js";
 
-// export function getAllTodosController(_req: any, res: any) {
-//   Todo.fechAll((data) => {
-//     const completedTodo =
-//       data?.filter((todo: any) => todo.completed).length || 0;
-//     const remainingTodo =
-//       data?.filter((todo: any) => !todo.completed).length || 0;
-//     res.render("index", {
-//       pageTitle: "TODO LIST",
-//       todos: data,
-//       completedTodo,
-//       remainingTodo,
-//     });
-//   });
-// }
-//----------------------------------------------------------------------------------------
-import { Todo } from "../model/todo.js";
 export async function getAllTodosController(_req: any, res: any) {
-  const completedTodos = await Todo.count({
-    where: {
-      completed: true,
-    },
+  const completedTodos = await Todo_Model.countDocuments({
+    completed: true,
   });
 
-  const todos = await Todo.findAll();
+  const todos = await Todo_Model.find();
 
   res.render("index", {
     pageTitle: "TODO LIST",

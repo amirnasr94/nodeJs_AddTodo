@@ -1,26 +1,12 @@
-//file based
-// import { Todo } from "../model/_bk_todo.js";
+import Todo_Model from "../db/model/todo.js";
 
-// export const deleteTodoController = (req: any, res: any) => {
-//   if (!req.query.id) res.redirect("/");
-//   Todo.deleteTodo(req.query.id, (err) => {
-//     if (err) console.log(err);
-//     res.redirect("/");
-//   });
-// };
-//-------------------------------------------------------------------------
-import { Todo } from "../model/todo.js";
-
-export const deleteTodoController = (req: any, res: any) => {
+export const deleteTodoController = async (req: any, res: any) => {
   if (!req.query.id) res.redirect("/");
-  Todo.destroy({
-    where: {
-      id: req.query.id,
-    },
-  })
-    .then(() => {
-      res.redirect("/");
-      console.log("Delete row was successfully");
-    })
-    .catch((err) => console.log(err));
+  try {
+    await Todo_Model.findByIdAndDelete({ _id: req.query.id });
+    res.redirect("/");
+    console.log("Delete row was successfully");
+  } catch (error) {
+    console.log(error);
+  }
 };

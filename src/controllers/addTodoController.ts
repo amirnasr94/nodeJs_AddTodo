@@ -10,11 +10,11 @@
 //   });
 // }
 //---------------------------------------------------------------------------------
-import { Todo } from "../model/todo.js";
+import Todo_Model from "../db/model/todo.js";
 
 export function addTodoController(req: any, res: any) {
   if (!req.body.task) res.redirect("/");
-  Todo.create({
+  Todo_Model.insertOne({
     text: req.body.task,
   })
     .then((response) => {
